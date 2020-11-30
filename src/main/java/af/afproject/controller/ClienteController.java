@@ -46,7 +46,7 @@ public class ClienteController {
     return ResponseEntity.ok(cliente);
   }
 
-  @GetMapping("/{codigo}/veiculos")
+  @GetMapping("/{codigo}/reservas")
   public List<ReservaDTO> getVeiculosCliente(@PathVariable int codigo) {
     Cliente cliente = clienteService.getClienteByCodigo(codigo);
     return reservaService.toListDTO(cliente.getReservas());
