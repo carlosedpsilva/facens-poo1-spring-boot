@@ -18,7 +18,7 @@ import af.afproject.model.Veiculo;
 import af.afproject.repository.ReservaRepository;
 
 @Service
-public class ReservaService {
+public class ReservaService implements IService<Reserva> {
 
   @Autowired
   private ReservaRepository reservaRepository;
@@ -42,17 +42,24 @@ public class ReservaService {
     return dto;
   }
 
-  public List<Reserva> getAllReservas() {
+  @Override
+  public ArrayList<Reserva> getAll() {
     return reservaRepository.getAll();
   }
 
-  public Reserva getReservaByCodigo(int codigo) {
+  @Override
+  public Reserva getByCodigo(int codigo) {
     Optional<Reserva> op = reservaRepository.getByCodigo(codigo);
     return op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reserva não existe"));
   }
 
+  @Override
+  public Reserva save(Reserva reserva) {
+    return reservaRepository.save(reserva);
+  }
+
   public Reserva save(Reserva reserva, int idCliente, int idVeiculo) {
-    Cliente cliente = clienteService.getClienteByCodigo(idCliente);
+    Cliente cliente = clienteService.getByCodigo(idCliente);
     Veiculo veiculo = veiculoService.getVeiculoByCodigo(idVeiculo);
 
     validatePeriod(reserva, reserva.getDataInicio(), reserva.getDataFim(), veiculo.getReservas());
@@ -63,28 +70,27 @@ public class ReservaService {
     cliente.addReserva(reserva);
     veiculo.addReserva(reserva);
 
-    return reservaRepository.save(reserva);
+    return save(reserva);
   }
 
+  @Override
   public void removeByCodigo(int codigo) {
-    reservaRepository.remove(getReservaByCodigo(codigo));
+    reservaRepository.remove(getByCodigo(codigo));
   }
 
+  @Override
+  public void remove(Reserva reserva) {
+    reservaRepository.remove(reserva);
+  }
+
+  @Override
   public Reserva update(Reserva reserva) {
-    Reserva aux = getReservaByCodigo(reserva.getCodigo());
+    Reserva aux = getByCodigo(reserva.getCodigo());
     validatePeriod(aux, aux.getDataInicio(), reserva.getDataFim(), aux.getVeiculo().getReservas());
     return reservaRepository.update(reserva);
   }
 
-  public Cliente getCliente(Reserva reserva) {
-    return reservaRepository.getCliente(reserva);
-  }
-
-  public Veiculo getVeiculo(Reserva reserva) {
-    return reservaRepository.getVeiculo(reserva);
-  }
-
-  public List<ReservaDTO> toListDTO(List<Reserva> reservas) {
+  public ArrayList<ReservaDTO> toListDTO(ArrayList<Reserva> reservas) {
     ArrayList<ReservaDTO> listDTO = new ArrayList<>();
 
     for (Reserva p : reservas) {

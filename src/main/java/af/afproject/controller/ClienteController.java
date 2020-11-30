@@ -1,5 +1,6 @@
 package af.afproject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,18 +38,18 @@ public class ClienteController {
 
   @GetMapping
   public List<Cliente> getClientes() {
-    return clienteService.getAllClientes();
+    return clienteService.getAll();
   }
 
   @GetMapping("/{codigo}")
   public ResponseEntity<Cliente> getCliente(@PathVariable final int codigo) {
-    Cliente cliente = clienteService.getClienteByCodigo(codigo);
+    Cliente cliente = clienteService.getByCodigo(codigo);
     return ResponseEntity.ok(cliente);
   }
 
   @GetMapping("/{codigo}/reservas")
-  public List<ReservaDTO> getVeiculosCliente(@PathVariable int codigo) {
-    Cliente cliente = clienteService.getClienteByCodigo(codigo);
+  public ArrayList<ReservaDTO> getVeiculosCliente(@PathVariable int codigo) {
+    Cliente cliente = clienteService.getByCodigo(codigo);
     return reservaService.toListDTO(cliente.getReservas());
   }
 

@@ -1,11 +1,11 @@
 package af.afproject.repository;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface IRepository<T> {
 
-  public List<T> getAll();
+  public ArrayList<T> getAll();
 
   public Optional<T> getByCodigo(int codigo);
 

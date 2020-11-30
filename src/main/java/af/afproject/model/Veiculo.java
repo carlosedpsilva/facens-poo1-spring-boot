@@ -1,7 +1,6 @@
 package af.afproject.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -13,7 +12,7 @@ public class Veiculo {
   private double valor;
 
   @JsonIgnore
-  private List<Reserva> reservas = new ArrayList<Reserva>();
+  private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
   public Veiculo(VeiculoDTO dto) {
     modelo = dto.getModelo();
@@ -44,7 +43,7 @@ public class Veiculo {
     this.valor = valor;
   }
 
-  public List<Reserva> getReservas() {
+  public ArrayList<Reserva> getReservas() {
     return reservas;
   }
 

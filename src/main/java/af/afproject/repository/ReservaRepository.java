@@ -1,26 +1,25 @@
 package af.afproject.repository;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import af.afproject.model.Cliente;
 import af.afproject.model.Reserva;
-import af.afproject.model.Veiculo;
 
 @Component
 public class ReservaRepository implements IRepository<Reserva> {
 
-  public List<Reserva> reservas = new ArrayList<Reserva>();
+  public ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
   private int nextCode = 1;
 
-  public List<Reserva> getAll() {
+  @Override
+  public ArrayList<Reserva> getAll() {
     return reservas;
   }
 
+  @Override
   public Optional<Reserva> getByCodigo(int codigo) {
     for (Reserva reserva : reservas) {
       if (reserva.getCodigo() == codigo) {
@@ -30,16 +29,19 @@ public class ReservaRepository implements IRepository<Reserva> {
     return Optional.empty();
   }
 
+  @Override
   public Reserva save(Reserva reserva) {
     reserva.setCodigo(nextCode++);
     reservas.add(reserva);
     return reserva;
   }
 
+  @Override
   public void remove(Reserva reserva) {
     reservas.remove(reserva);
   }
 
+  @Override
   public Reserva update(Reserva reserva) {
     Reserva aux = getByCodigo(reserva.getCodigo()).get();
     if (aux != null) {
@@ -47,13 +49,5 @@ public class ReservaRepository implements IRepository<Reserva> {
       aux.setDataFim(reserva.getDataFim());
     }
     return aux;
-  }
-
-  public Cliente getCliente(Reserva reserva) {
-    return reserva.getCliente();
-  }
-
-  public Veiculo getVeiculo(Reserva reserva) {
-    return reserva.getVeiculo();
   }
 }

@@ -1,7 +1,6 @@
 package af.afproject.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,7 +13,7 @@ public class Cliente {
   private String cpf;
 
   @JsonIgnore
-  private List<Reserva> reservas = new ArrayList<Reserva>();
+  private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
   public Cliente(ClienteDTO dto) {
     nome = dto.getNome();
@@ -54,7 +53,7 @@ public class Cliente {
     this.cpf = cpf;
   }
 
-  public List<Reserva> getReservas() {
+  public ArrayList<Reserva> getReservas() {
     return reservas;
   }
 

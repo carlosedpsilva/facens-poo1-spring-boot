@@ -25,12 +25,12 @@ public class ReservaController {
 
   @GetMapping
   public List<Reserva> getReservas() {
-    return reservaService.getAllReservas();
+    return reservaService.getAll();
   }
 
   @GetMapping("/{codigo}")
   public ResponseEntity<Reserva> getReserva(@PathVariable int codigo) {
-    Reserva reserva = reservaService.getReservaByCodigo(codigo);
+    Reserva reserva = reservaService.getByCodigo(codigo);
     return ResponseEntity.ok(reserva);
   }
 
