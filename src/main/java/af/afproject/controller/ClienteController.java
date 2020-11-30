@@ -76,7 +76,7 @@ public class ClienteController {
   }
 
   @PutMapping("/{codigo}")
-  public ResponseEntity<Cliente> update(@PathVariable int codigo, @RequestBody ClienteDTO clienteDTO) {
+  public ResponseEntity<Cliente> atualizar(@PathVariable int codigo, @RequestBody ClienteDTO clienteDTO) {
     Cliente cliente = clienteService.fromDTO(clienteDTO);
     cliente.setCodigo(codigo);
     cliente = clienteService.update(cliente);
